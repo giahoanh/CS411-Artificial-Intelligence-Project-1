@@ -47,8 +47,8 @@
 
 ## Section 5: Discussion
 - **Which search algorithm is best for this route finding problem?** 
-    [A*]
-- **Search Efficiency (Nodes expanded/time taken comparison):** [Write your answer here comparing search efficiency in terms of number of nodes visited and runtime across different algorithms]
+    [A* because it minimizes the stored road distance and the consistent heuristic meets the implementation requirements. The way is by taking both the accumulated cost and an estimation of the remaining left over distance to the destination. It will always find the lowest cost route with the consistent heuristic.]
+- **Search Efficiency (Nodes expanded/time taken comparison):** [In the Greedy & A* records 3 entries from Chicago to Aurora while against the DFS at 8, BFS at 10, UCS at 11 and IDS at 17. It the same result of the 67.76 km route as UCS but with less exploration expanded. Also to note that DFS was the fastest but return the longest route to the destination.]
 - **Link the idea of search algorithm to today Generative AI.** 
-    [Write your answer here]
+    [I think in today new era and generation with Generative AI such as connecting it with like google maps etc. It often succeeds in it given tasks but often doesn't do it correctly such as the search algorithm we use such as A*. It will often be a BFS and DFS methods that are similar on google maps but there are so many xyz factors with the time, distance and more. ]
 
