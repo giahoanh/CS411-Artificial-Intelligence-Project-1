@@ -1,326 +1,418 @@
 {
-  "region": "Chicago metropolitan area, Illinois, USA",
+  "region": "Illinois, USA",
   "nodes": {
-    "Chicago": {
+    "Chicago, IL": {
       "lat": 41.8755616,
       "lon": -87.6244212
     },
-    "Chicago Heights": {
-      "lat": 41.5062834,
-      "lon": -87.6357079
-    },
-    "Harvey": {
-      "lat": 41.6100344,
-      "lon": -87.6467132
-    },
-    "Glenwood": {
-      "lat": 41.5424867,
-      "lon": -87.6022765
-    },
-    "Matteson": {
-      "lat": 41.509832,
-      "lon": -87.739267
-    },
-    "Arlington Heights": {
-      "lat": 42.0811563,
-      "lon": -87.9802164
-    },
-    "Schaumburg": {
-      "lat": 42.0333608,
-      "lon": -88.083406
-    },
-    "Frankfort": {
-      "lat": 41.4979467,
-      "lon": -87.8495946
-    },
-    "Oak Park": {
-      "lat": 41.8878145,
-      "lon": -87.7887615
-    },
-    "Elmhurst": {
-      "lat": 41.8994745,
-      "lon": -87.9403418
-    },
-    "Lombard": {
-      "lat": 41.8864687,
-      "lon": -88.0201536
-    },
-    "Wheaton": {
-      "lat": 41.8646959,
-      "lon": -88.1101709
-    },
-    "Naperville": {
-      "lat": 41.7728699,
-      "lon": -88.1479278
-    },
-    "Aurora": {
+    "Aurora, IL": {
       "lat": 41.7571701,
       "lon": -88.3147539
     },
-    "Flossmoor": {
-      "lat": 41.5428123,
-      "lon": -87.6847684
+    "Naperville, IL": {
+      "lat": 41.7728699,
+      "lon": -88.1479278
     },
-    "Bolingbrook": {
-      "lat": 41.7003302,
-      "lon": -88.0717708
-    },
-    "Joliet": {
+    "Joliet, IL": {
       "lat": 41.5263603,
       "lon": -88.0840212
     },
-    "Orland Park": {
+    "Rockford, IL": {
+      "lat": 42.2713945,
+      "lon": -89.093966
+    },
+    "Springfield, IL": {
+      "lat": 39.7990175,
+      "lon": -89.6439575
+    },
+    "Peoria, IL": {
+      "lat": 40.6938609,
+      "lon": -89.5891008
+    },
+    "Elgin, IL": {
+      "lat": 42.03726,
+      "lon": -88.2810994
+    },
+    "Waukegan, IL": {
+      "lat": 42.3602273,
+      "lon": -87.8318164
+    },
+    "Champaign, IL": {
+      "lat": 40.1164841,
+      "lon": -88.2430932
+    },
+    "Bloomington, IL": {
+      "lat": 40.4797828,
+      "lon": -88.9939147
+    },
+    "Decatur, IL": {
+      "lat": 39.8454163,
+      "lon": -88.9524151
+    },
+    "Evanston, IL": {
+      "lat": 42.0470043,
+      "lon": -87.6846053
+    },
+    "Schaumburg, IL": {
+      "lat": 42.0333608,
+      "lon": -88.083406
+    },
+    "Arlington Heights, IL": {
+      "lat": 42.0811563,
+      "lon": -87.9802164
+    },
+    "Bolingbrook, IL": {
+      "lat": 41.7003302,
+      "lon": -88.0717708
+    },
+    "Palatine, IL": {
+      "lat": 42.1105502,
+      "lon": -88.0434304
+    },
+    "Skokie, IL": {
+      "lat": 42.0262972,
+      "lon": -87.7521069
+    },
+    "Des Plaines, IL": {
+      "lat": 42.0415823,
+      "lon": -87.8873916
+    },
+    "Orland Park, IL": {
       "lat": 41.630663,
       "lon": -87.8536288
     },
-    "Tinley Park": {
-      "lat": 41.5733669,
-      "lon": -87.7844944
+    "Kankakee, IL": {
+      "lat": 41.1253903,
+      "lon": -87.848682
     },
-    "Oak Lawn": {
-      "lat": 41.7108662,
-      "lon": -87.7581081
+    "DeKalb, IL": {
+      "lat": 41.8903447,
+      "lon": -88.7713953
     }
   },
   "connections": {
-    "Chicago": [
+    "Chicago, IL": [
       {
-        "node": "Oak Park",
-        "distance": 15.924
+        "node": "Evanston, IL",
+        "distance": 22.699
       },
       {
-        "node": "Oak Lawn",
-        "distance": 26.926299999999998
+        "node": "Skokie, IL",
+        "distance": 23.14
       },
       {
-        "node": "Harvey",
-        "distance": 34.4789
+        "node": "Des Plaines, IL",
+        "distance": 32.3421
+      },
+      {
+        "node": "Naperville, IL",
+        "distance": 49.7845
+      },
+      {
+        "node": "Joliet, IL",
+        "distance": 71.68769999999999
+      },
+      {
+        "node": "Orland Park, IL",
+        "distance": 42.3708
       }
     ],
-    "Chicago Heights": [
+    "Aurora, IL": [
       {
-        "node": "Flossmoor",
-        "distance": 7.194
-      },
-      {
-        "node": "Glenwood",
-        "distance": 6.6933
-      }
-    ],
-    "Harvey": [
-      {
-        "node": "Chicago",
-        "distance": 35.6143
-      },
-      {
-        "node": "Oak Lawn",
-        "distance": 18.1512
-      },
-      {
-        "node": "Glenwood",
-        "distance": 10.9501
-      },
-      {
-        "node": "Flossmoor",
-        "distance": 9.4084
-      }
-    ],
-    "Glenwood": [
-      {
-        "node": "Chicago Heights",
-        "distance": 6.6405
-      },
-      {
-        "node": "Harvey",
-        "distance": 10.921700000000001
-      }
-    ],
-    "Matteson": [
-      {
-        "node": "Frankfort",
-        "distance": 11.6165
-      },
-      {
-        "node": "Tinley Park",
-        "distance": 13.744200000000001
-      },
-      {
-        "node": "Flossmoor",
-        "distance": 8.0557
-      }
-    ],
-    "Arlington Heights": [
-      {
-        "node": "Schaumburg",
-        "distance": 13.4336
-      }
-    ],
-    "Schaumburg": [
-      {
-        "node": "Elmhurst",
-        "distance": 24.0817
-      },
-      {
-        "node": "Arlington Heights",
-        "distance": 13.4415
-      }
-    ],
-    "Frankfort": [
-      {
-        "node": "Joliet",
-        "distance": 21.389599999999998
-      },
-      {
-        "node": "Matteson",
-        "distance": 11.3051
-      },
-      {
-        "node": "Orland Park",
-        "distance": 15.247399999999999
-      }
-    ],
-    "Oak Park": [
-      {
-        "node": "Chicago",
-        "distance": 15.6779
-      },
-      {
-        "node": "Elmhurst",
-        "distance": 16.9695
-      }
-    ],
-    "Elmhurst": [
-      {
-        "node": "Oak Park",
-        "distance": 16.7248
-      },
-      {
-        "node": "Lombard",
-        "distance": 8.105
-      },
-      {
-        "node": "Schaumburg",
-        "distance": 25.512900000000002
-      }
-    ],
-    "Lombard": [
-      {
-        "node": "Elmhurst",
-        "distance": 7.931100000000001
-      },
-      {
-        "node": "Wheaton",
-        "distance": 8.553799999999999
-      }
-    ],
-    "Wheaton": [
-      {
-        "node": "Lombard",
-        "distance": 9.447700000000001
-      },
-      {
-        "node": "Naperville",
-        "distance": 12.585899999999999
-      }
-    ],
-    "Naperville": [
-      {
-        "node": "Wheaton",
-        "distance": 12.950299999999999
-      },
-      {
-        "node": "Aurora",
-        "distance": 14.9756
-      },
-      {
-        "node": "Bolingbrook",
-        "distance": 14.8495
-      }
-    ],
-    "Aurora": [
-      {
-        "node": "Naperville",
+        "node": "Naperville, IL",
         "distance": 14.998299999999999
       },
       {
-        "node": "Joliet",
+        "node": "DeKalb, IL",
+        "distance": 49.2329
+      },
+      {
+        "node": "Joliet, IL",
         "distance": 36.1828
       }
     ],
-    "Flossmoor": [
+    "Naperville, IL": [
       {
-        "node": "Matteson",
-        "distance": 7.5484
+        "node": "Chicago, IL",
+        "distance": 49.7068
       },
       {
-        "node": "Chicago Heights",
-        "distance": 6.7089
+        "node": "Schaumburg, IL",
+        "distance": 44.5433
       },
       {
-        "node": "Harvey",
-        "distance": 10.046100000000001
+        "node": "Aurora, IL",
+        "distance": 14.9756
+      },
+      {
+        "node": "Bolingbrook, IL",
+        "distance": 14.8495
       }
     ],
-    "Bolingbrook": [
+    "Joliet, IL": [
       {
-        "node": "Naperville",
-        "distance": 14.8672
+        "node": "Chicago, IL",
+        "distance": 72.1257
       },
       {
-        "node": "Joliet",
-        "distance": 21.0963
-      }
-    ],
-    "Joliet": [
-      {
-        "node": "Aurora",
+        "node": "Aurora, IL",
         "distance": 35.8951
       },
       {
-        "node": "Bolingbrook",
+        "node": "Bolingbrook, IL",
         "distance": 21.199900000000003
       },
       {
-        "node": "Frankfort",
-        "distance": 22.9952
+        "node": "Orland Park, IL",
+        "distance": 31.697200000000002
+      },
+      {
+        "node": "Kankakee, IL",
+        "distance": 57.0983
+      },
+      {
+        "node": "Bloomington, IL",
+        "distance": 153.08329999999998
       }
     ],
-    "Orland Park": [
+    "Rockford, IL": [
       {
-        "node": "Frankfort",
-        "distance": 15.154
+        "node": "DeKalb, IL",
+        "distance": 74.4503
       },
       {
-        "node": "Tinley Park",
-        "distance": 12.2581
+        "node": "Elgin, IL",
+        "distance": 77.666
       },
       {
-        "node": "Oak Lawn",
-        "distance": 15.3731
+        "node": "Peoria, IL",
+        "distance": 226.449
       }
     ],
-    "Tinley Park": [
+    "Springfield, IL": [
       {
-        "node": "Orland Park",
-        "distance": 12.151
+        "node": "Bloomington, IL",
+        "distance": 106.2417
       },
       {
-        "node": "Matteson",
-        "distance": 12.629
+        "node": "Peoria, IL",
+        "distance": 117.0656
+      },
+      {
+        "node": "Decatur, IL",
+        "distance": 62.2934
       }
     ],
-    "Oak Lawn": [
+    "Peoria, IL": [
       {
-        "node": "Chicago",
-        "distance": 27.1891
+        "node": "Rockford, IL",
+        "distance": 227.9724
       },
       {
-        "node": "Orland Park",
-        "distance": 15.875
+        "node": "Bloomington, IL",
+        "distance": 63.6948
       },
       {
-        "node": "Harvey",
-        "distance": 18.4606
+        "node": "Springfield, IL",
+        "distance": 115.9199
+      }
+    ],
+    "Elgin, IL": [
+      {
+        "node": "Schaumburg, IL",
+        "distance": 22.4071
+      },
+      {
+        "node": "DeKalb, IL",
+        "distance": 56.9952
+      },
+      {
+        "node": "Rockford, IL",
+        "distance": 79.47
+      }
+    ],
+    "Waukegan, IL": [
+      {
+        "node": "Arlington Heights, IL",
+        "distance": 48.5743
+      },
+      {
+        "node": "Evanston, IL",
+        "distance": 45.496300000000005
+      }
+    ],
+    "Champaign, IL": [
+      {
+        "node": "Kankakee, IL",
+        "distance": 124.6926
+      },
+      {
+        "node": "Bloomington, IL",
+        "distance": 81.2728
+      },
+      {
+        "node": "Decatur, IL",
+        "distance": 76.13560000000001
+      }
+    ],
+    "Bloomington, IL": [
+      {
+        "node": "Joliet, IL",
+        "distance": 154.54870000000003
+      },
+      {
+        "node": "Peoria, IL",
+        "distance": 64.0716
+      },
+      {
+        "node": "Champaign, IL",
+        "distance": 81.7168
+      },
+      {
+        "node": "Decatur, IL",
+        "distance": 73.4316
+      },
+      {
+        "node": "Springfield, IL",
+        "distance": 105.8539
+      }
+    ],
+    "Decatur, IL": [
+      {
+        "node": "Bloomington, IL",
+        "distance": 72.9542
+      },
+      {
+        "node": "Springfield, IL",
+        "distance": 62.191
+      },
+      {
+        "node": "Champaign, IL",
+        "distance": 75.879
+      }
+    ],
+    "Evanston, IL": [
+      {
+        "node": "Chicago, IL",
+        "distance": 22.4142
+      },
+      {
+        "node": "Skokie, IL",
+        "distance": 8.017
+      },
+      {
+        "node": "Waukegan, IL",
+        "distance": 45.149
+      }
+    ],
+    "Schaumburg, IL": [
+      {
+        "node": "Palatine, IL",
+        "distance": 11.6543
+      },
+      {
+        "node": "Elgin, IL",
+        "distance": 23.3278
+      },
+      {
+        "node": "Naperville, IL",
+        "distance": 42.3422
+      }
+    ],
+    "Arlington Heights, IL": [
+      {
+        "node": "Des Plaines, IL",
+        "distance": 9.671299999999999
+      },
+      {
+        "node": "Palatine, IL",
+        "distance": 6.551399999999999
+      },
+      {
+        "node": "Waukegan, IL",
+        "distance": 48.365
+      }
+    ],
+    "Bolingbrook, IL": [
+      {
+        "node": "Naperville, IL",
+        "distance": 14.8672
+      },
+      {
+        "node": "Joliet, IL",
+        "distance": 21.0963
+      }
+    ],
+    "Palatine, IL": [
+      {
+        "node": "Arlington Heights, IL",
+        "distance": 6.6096
+      },
+      {
+        "node": "Schaumburg, IL",
+        "distance": 11.289100000000001
+      }
+    ],
+    "Skokie, IL": [
+      {
+        "node": "Chicago, IL",
+        "distance": 23.7332
+      },
+      {
+        "node": "Evanston, IL",
+        "distance": 8.4024
+      },
+      {
+        "node": "Des Plaines, IL",
+        "distance": 11.9033
+      }
+    ],
+    "Des Plaines, IL": [
+      {
+        "node": "Chicago, IL",
+        "distance": 31.880200000000002
+      },
+      {
+        "node": "Skokie, IL",
+        "distance": 11.898100000000001
+      },
+      {
+        "node": "Arlington Heights, IL",
+        "distance": 9.264100000000001
+      }
+    ],
+    "Orland Park, IL": [
+      {
+        "node": "Chicago, IL",
+        "distance": 41.6235
+      },
+      {
+        "node": "Joliet, IL",
+        "distance": 30.7122
+      }
+    ],
+    "Kankakee, IL": [
+      {
+        "node": "Joliet, IL",
+        "distance": 57.802
+      },
+      {
+        "node": "Champaign, IL",
+        "distance": 125.3298
+      }
+    ],
+    "DeKalb, IL": [
+      {
+        "node": "Elgin, IL",
+        "distance": 56.5605
+      },
+      {
+        "node": "Rockford, IL",
+        "distance": 73.8645
+      },
+      {
+        "node": "Aurora, IL",
+        "distance": 46.4497
       }
     ]
   }

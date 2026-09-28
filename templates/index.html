@@ -3,181 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicago search</title>
+    <title>Search Visualizer</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
-    <h1>Chicago search</h1>
-    <p>Explore routes between 20 Chicagoan area locations.</p>
+    <h1 id="pageTitle">Search Visualizer</h1>
+    <p id="status" role="status">Loading map data...</p>
 
-    <form id="search-form">
-        <fieldset id="controls" disabled>
-            <legend>Find route</legend>
+    <fieldset id="controls" disabled>
+        <legend>Find a route</legend>
+        <label for="startSelect">Start City:</label>
+        <select id="startSelect"></select>
+        <label for="goalSelect">Destination City:</label>
+        <select id="goalSelect"></select>
+        <label for="algoSelect">Search Algorithm:</label>
+        <select id="algoSelect">
+            <option value="bfs">Breadth-First Search (BFS)</option>
+            <option value="dfs">Depth-First Search (DFS)</option>
+            <option value="ucs">Uniform Cost Search (UCS)</option>
+            <option value="ids">Iterative Deepening Search (IDS)</option>
+            <option value="greedy">Greedy Best First Search</option>
+            <option value="astar">A* Search</option>
+        </select>
+        <button type="button" id="btnRun">Run Search</button>
+        <button type="button" id="btnReset">Reset</button>
+    </fieldset>
 
-            <label for="start">Source:</label>
-            <select id="start" required></select>
+    <h2>Algorithm Concept Note</h2>
+    <p><strong>Main Idea:</strong> <span id="conceptMain"></span></p>
+    <p><strong>Node Selection:</strong> <span id="conceptSelection"></span></p>
+    <p><strong>Information Used:</strong> <span id="conceptInfo"></span></p>
 
-            <label for="goal">Destination:</label>
-            <select id="goal" required></select>
+    <div id="map" style="height: 450px;" aria-label="Illinois map"></div>
+    <p>Gray lines show graph connections. Green shows the selected path.
+        Lines join city coordinates; distances come from OSRM road routes.</p>
 
-            <label for="algorithm">Algorithm:</label>
-            <select id="algorithm">
-                <option value="bfs">BFS</option>
-                <option value="dfs">DFS</option>
-                <option value="ucs">UCS</option>
-                <option value="ids">IDS</option>
-                <option value="greedy">Greedy BFS</option>
-                <option value="astar">A* Search</option>
-            </select>
-
-            <button type="submit">Find route</button>
-        </fieldset>
-    </form>
-
-    <p id="status" role="status">Loading</p>
-
-    <h2>algorithm note</h2>
-    <p><strong>Main idea:</strong> <span id="idea"></span></p>
-    <p><strong>Node selection:</strong> <span id="selection"></span></p>
-    <p><strong>Information used:</strong> <span id="information"></span></p>
-
-    <div id="map" style="height: 450px;" aria-label="Chicago-area map"></div>
-    <p>
-        Gray lines show connections. Blue shows the selected path.
-        Lines connect city coordinates; distances use OSRM road data.
-    </p>
-
-    <h2>Search Results</h2>
-    <pre id="result" aria-live="polite" style="white-space: pre-wrap;">Choose your locations, click Find route.</pre>
+    <h2>Results</h2>
+    <p><strong>Road distance:</strong> <span id="statCost">--</span></p>
+    <p><strong>Expanded entries:</strong> <span id="statExpanded">--</span></p>
+    <p><strong>Path:</strong> <span id="pathDisplay">None</span></p>
+    <details>
+        <summary>Expansion order</summary>
+        <p id="expansionDisplay">None</p>
+    </details>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        const form = document.getElementById("search-form");
-        const controls = document.getElementById("controls");
-        const startSelect = document.getElementById("start");
-        const goalSelect = document.getElementById("goal");
-        const algorithmSelect = document.getElementById("algorithm");
-        const statusText = document.getElementById("status");
-        const result = document.getElementById("result");
-
-        let graph;
-        let map;
-        let pathLayer;
-
-        const concepts = {
+        const ALGO_CONCEPTS = {
             bfs: {
-                idea: "search level by level to find fewest connections.",
-                selection: "take the oldest node from a FIFO queue.",
-                information: "depth + without prioritizing road distance."
+                main: "Search level by level to find the fewest connections.",
+                selection: "Remove the oldest node from a FIFO queue.",
+                info: "Depth, without road distance priority."
             },
             dfs: {
-                idea: "explore a branch deeply before backtracking.",
-                selection: "take the newest node from a stack.",
-                information: "connections and visitation order, without cost priority."
+                main: "Explore a branch deeply before backtracking.",
+                selection: "Remove the most recently added node from a stack.",
+                info: "Connections and visitation order, without cost priority."
             },
             ucs: {
-                idea: "find a minimum cost path with nonnegative edge costs.",
-                selection: "choose the lowest accumulated cost, g(n).",
-                information: "road distance traveled from the source."
+                main: "Find a minimum cost path when edge costs are nonnegative.",
+                selection: "Choose the lowest accumulated cost g(n).",
+                info: "Road distance traveled from the source."
             },
             ids: {
-                idea: "repeat depth-limited DFS with increasing limits.",
-                selection: "use DFS order within each depth limit.",
-                information: "current depth and depth limit."
+                main: "Repeat depth limited DFS to find the fewest connections. Visits may repeat.",
+                selection: "Use depthfirst order within each increasing limit.",
+                info: "Current depth and depth limit."
             },
             greedy: {
-                idea: "head toward the estimated closest city to the goal; optimality is not guaranteed.",
-                selection: "choose the lowest heuristic, h(n).",
-                information: "haversine distance to the destination."
+                main: "Head toward the estimated closest city to the goal, without guaranteeing minimum cost.",
+                selection: "Choose the lowest heuristic h(n).",
+                info: "Haversine distance to the goal."
             },
             astar: {
-                idea: "balance distance travels an distance remaining. This implementation is optimal with great heuristic.",
-                selection: "choose the lowest f(n) = g(n) + h(n).",
-                information: "accumulated road distance and Haversine distance to the goal."
+                main: "Balance traveled and estimated remaining distance. This implementation is optimal with a consistent heuristic.",
+                selection: "Choose the lowest f(n) = g(n) + h(n).",
+                info: "Accumulated road distance and Haversine distance to the goal."
             }
         };
 
+        const startSelect = document.getElementById("startSelect");
+        const goalSelect = document.getElementById("goalSelect");
+        const algoSelect = document.getElementById("algoSelect");
+        const controls = document.getElementById("controls");
+        const statusText = document.getElementById("status");
+        let map;
+        let mapData;
+        let activePath;
+
         function updateConcept() {
-            const concept = concepts[algorithmSelect.value];
-            document.getElementById("idea").textContent = concept.idea;
-            document.getElementById("selection").textContent = concept.selection;
-            document.getElementById("information").textContent = concept.information;
+            const concept = ALGO_CONCEPTS[algoSelect.value];
+            document.getElementById("conceptMain").textContent = concept.main;
+            document.getElementById("conceptSelection").textContent = concept.selection;
+            document.getElementById("conceptInfo").textContent = concept.info;
         }
 
         function coordinatesFor(city) {
-            const location = graph.nodes[city];
-            return [location.lat, location.lon];
+            const coordinates = mapData.nodes[city];
+            return [coordinates.lat, coordinates.lon];
         }
 
-        function addMarker(city, color, layer) {
-            const label = document.createElement("span");
-            label.textContent = city;
-
-            L.circleMarker(coordinatesFor(city), {
-                radius: 6,
-                color: color,
-                fillOpacity: 1
-            }).bindTooltip(label).addTo(layer);
-        }
-
-        function drawGraph() {
-            map = L.map("map");
-
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                maxZoom: 19,
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            const drawnConnections = new Set();
-
-            for (const [city, neighbors] of Object.entries(graph.connections)) {
-                for (const neighbor of neighbors) {
-                    const key = JSON.stringify([city, neighbor.node].sort());
-
-                    if (!drawnConnections.has(key)) {
-                        drawnConnections.add(key);
-
-                        L.polyline([
-                            coordinatesFor(city),
-                            coordinatesFor(neighbor.node)
-                        ], {
-                            color: "gray",
-                            weight: 2
-                        }).addTo(map);
-                    }
-                }
+        function clearResults() {
+            if (activePath) {
+                map.removeLayer(activePath);
+                activePath = null;
             }
-
-            const cities = Object.keys(graph.nodes);
-
-            for (const city of cities) {
-                addMarker(city, "black", map);
-            }
-
-            pathLayer = L.layerGroup().addTo(map);
-            map.fitBounds(cities.map(coordinatesFor), { padding: [30, 30] });
+            document.getElementById("statCost").textContent = "--";
+            document.getElementById("statExpanded").textContent = "--";
+            document.getElementById("pathDisplay").textContent = "None";
+            document.getElementById("expansionDisplay").textContent = "None";
         }
 
-        async function loadMap() {
+        async function init() {
             try {
                 const response = await fetch("/api/map");
-
                 if (!response.ok) {
-                    throw new Error("Could not load map data.");
+                    throw new Error("Could not load the map data.");
                 }
-
-                graph = await response.json();
-                const cities = Object.keys(graph.nodes).sort();
-
+                mapData = await response.json();
+                const cities = Object.keys(mapData.nodes).sort();
+                document.getElementById("pageTitle").textContent = "Search Visualizer - " + mapData.region;
                 for (const city of cities) {
                     startSelect.add(new Option(city, city));
                     goalSelect.add(new Option(city, city));
                 }
+                startSelect.value = "Chicago, IL";
+                goalSelect.value = "Aurora, IL";
 
-                startSelect.value = "Chicago";
-                goalSelect.value = "Aurora";
+                map = L.map("map");
+                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
-                drawGraph();
+                const drawn = new Set();
+                for (const [city, neighbors] of Object.entries(mapData.connections)) {
+                    for (const neighbor of neighbors) {
+                        const key = JSON.stringify([city, neighbor.node].sort());
+                        if (!drawn.has(key)) {
+                            drawn.add(key);
+                            L.polyline([
+                                coordinatesFor(city), coordinatesFor(neighbor.node)
+                            ], { color: "gray", weight: 2 }).addTo(map);
+                        }
+                    }
+                }
+
+                for (const city of cities) {
+                    const label = document.createElement("span");
+                    label.textContent = city;
+                    L.circleMarker(coordinatesFor(city), {
+                        radius: 5, color: "black", fillOpacity: 1
+                    }).bindPopup(label).addTo(map);
+                }
+
+                map.fitBounds(cities.map(coordinatesFor), { padding: [30, 30] });
                 controls.disabled = false;
                 statusText.textContent = cities.length + " locations loaded.";
             } catch (error) {
@@ -185,95 +165,62 @@
             }
         }
 
-        function displayResult(data, algorithmName) {
-            const lines = [
-                "Algorithm: " + algorithmName,
-                "Expanded entries: " + data.expanded.length
-            ];
-
-            if (data.path && data.path.length > 0) {
-                lines.push("Route: " + data.path.join(" → "));
-                lines.push("Road distance: " + Number(data.distance).toFixed(2) + " km");
-                lines.push("Connections: " + (data.path.length - 1));
-            } else {
-                lines.push("No route found.");
-            }
-
-            lines.push("");
-            lines.push("Expansion order:");
-            lines.push(data.expanded.join(" → "));
-
-            result.textContent = lines.join("\n");
-        }
-
-        function drawPath(path) {
-            if (!path || path.length === 0) {
+        document.getElementById("btnRun").addEventListener("click", async function() {
+            const start = startSelect.value;
+            const goal = goalSelect.value;
+            const algorithm = algoSelect.value;
+            if (!start || !goal) {
+                statusText.textContent = "Please select both cities.";
                 return;
             }
 
-            const coordinates = path.map(coordinatesFor);
-
-            L.polyline(coordinates, {
-                color: "blue",
-                weight: 5
-            }).addTo(pathLayer);
-
-            addMarker(path[0], "green", pathLayer);
-
-            if (path.length > 1) {
-                addMarker(path[path.length - 1], "red", pathLayer);
-            }
-
-            map.fitBounds(coordinates, {
-                padding: [40, 40],
-                maxZoom: 12
-            });
-        }
-
-        async function runSearch(event) {
-            event.preventDefault();
-
-            const selections = {
-                start: startSelect.value,
-                goal: goalSelect.value,
-                algorithm: algorithmSelect.value
-            };
-
-            const algorithmName = algorithmSelect.selectedOptions[0].textContent;
-
+            clearResults();
             controls.disabled = true;
             statusText.textContent = "Searching...";
-            result.textContent = "";
-            pathLayer.clearLayers();
-
             try {
                 const response = await fetch("/api/search", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(selections)
+                    body: JSON.stringify({ start, goal, algorithm })
                 });
-
                 const data = await response.json();
-
                 if (!response.ok) {
                     throw new Error(data.error || "Search failed.");
                 }
 
-                displayResult(data, algorithmName);
-                drawPath(data.path);
+                document.getElementById("statExpanded").textContent = data.expanded.length;
+                document.getElementById("expansionDisplay").textContent = data.expanded.join(" → ");
+                if (data.path && data.path.length > 0) {
+                    document.getElementById("statCost").textContent = Number(data.distance).toFixed(2) + " km";
+                    document.getElementById("pathDisplay").textContent = data.path.join(" → ");
+                    const points = data.path.map(coordinatesFor);
+                    activePath = L.layerGroup().addTo(map);
+                    L.polyline(points, { color: "green", weight: 4 }).addTo(activePath);
+                    L.circleMarker(points[0], { radius: 8, color: "green" }).addTo(activePath);
+                    if (points.length > 1) {
+                        L.circleMarker(points[points.length - 1], { radius: 8, color: "red" }).addTo(activePath);
+                    }
+                    map.fitBounds(points, { padding: [40, 40], maxZoom: 12 });
+                } else {
+                    document.getElementById("pathDisplay").textContent = "No path found.";
+                }
                 statusText.textContent = "Search complete.";
             } catch (error) {
                 statusText.textContent = "Error: " + error.message;
             } finally {
                 controls.disabled = false;
             }
-        }
+        });
 
-        algorithmSelect.addEventListener("change", updateConcept);
-        form.addEventListener("submit", runSearch);
+        document.getElementById("btnReset").addEventListener("click", function() {
+            clearResults();
+            map.fitBounds(Object.keys(mapData.nodes).map(coordinatesFor), { padding: [30, 30] });
+            statusText.textContent = "Results cleared.";
+        });
 
+        algoSelect.addEventListener("change", updateConcept);
         updateConcept();
-        loadMap();
+        init();
     </script>
 </body>
 </html>
