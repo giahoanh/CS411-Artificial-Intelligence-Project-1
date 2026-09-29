@@ -10,20 +10,20 @@
 ---
 
 ## Student Information 
-- **Name:** [G Le]
-- **UID (netID):** [gle3]
-- **UIN:** [665375271]
+- **Name:** G Le
+- **UID (netID):** gle3
+- **UIN:** 665375271
 
 ---
 
 ## Section 1: Selected City Region
-- **Selected Region:** [Illinois, USA]
+- **Selected Region:** Illinois, USA
 ---
 
 ## Section 2: Map Graph Configuration
-- **Total Cities Configured:** [22]
-- **Total Connection Edges:** [70 directed edges representing 35 selected city pairs.]
-- **Graph Fully Connected:** [Yes]
+- **Total Cities Configured:** 22
+- **Total Connection Edges:** 70 directed edges representing 35 selected city pairs
+- **Graph Fully Connected:** Yes
 
 ---
 
@@ -39,16 +39,17 @@
 ---
 
 ## Section 4: Deployed and Presentation Information
-- **Deployment Platform:** [Render]
-- **Live Deployment URL:** [https://cs411-artificial-intelligence-project-1.onrender.com]
+- **Deployment Platform:** Render
+- **Live Deployment URL:** https://cs411-artificial-intelligence-project-1.onrender.com
 - **Video Presentation Link:** [Provide an accessible link to your 5–7 minute video presentation]
 
 ---
 
 ## Section 5: Discussion
 - **Which search algorithm is best for this route finding problem?** 
-    [A* because it minimizes the stored road distance and the consistent heuristic meets the implementation requirements. The way is by taking both the accumulated cost and an estimation of the remaining left over distance to the destination. It will always find the lowest cost route with the consistent heuristic.]
-- **Search Efficiency (Nodes expanded/time taken comparison):** [In the Greedy & A* records 3 entries from Chicago to Aurora while against the DFS at 8, BFS at 10, UCS at 11 and IDS at 17. It the same result of the 67.76 km route as UCS but with less exploration expanded. Also to note that DFS was the fastest but return the longest route to the destination.]
+    A* because it minimizes the stored road distance and the consistent heuristic meets the implementation requirements. The way is by taking both the accumulated cost and an estimation of the remaining left over distance to the destination. It will always find the lowest cost route with the consistent heuristic.
+- **Search Efficiency (Nodes expanded/time taken comparison):**
+  In the Greedy & A* records 3 entries from Chicago to Aurora while against the DFS at 8, BFS at 10, UCS at 11 and IDS at 17. It the same result of the 67.76 km route as UCS but with less exploration expanded. Also to note that DFS was the fastest but return the longest route to the destination.
 - **Link the idea of search algorithm to today Generative AI.** 
-    [I think in today new era and generation with Generative AI such as connecting it with like google maps etc. It often succeeds in it given tasks but often doesn't do it correctly such as the search algorithm we use such as A*. It will often be a BFS and DFS methods that are similar on google maps but there are so many xyz factors with the time, distance and more. ]
+    I think in today new era and generation with Generative AI such as connecting it with like google maps etc. It often succeeds in it given tasks but often doesn't do it correctly such as the search algorithm we use such as A*. It will often be a BFS and DFS methods that are similar on google maps but there are so many xyz factors with the time, distance and more. 
 
